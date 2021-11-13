@@ -25,7 +25,7 @@ function dbclick(){
 import readline from 'readline';
 function question(string){
   let typer=readline.createInterface({input:process.stdin,output:process.stdout});
-  return new Promise(rs=>typer.question(string,s=>rs(s)));
+  return new Promise(rs=>typer.question(string,s=>(rs(s),typer.close())));
 }
 async function manual(){
   let input=await question('需要打包的游戏路径\n');
@@ -41,7 +41,9 @@ async function pack(input,output){
     getFiles('');
     stream=fs.createWriteStream(output);
     files.forEach(s=>s.name=normalize(s.name));
-    stream.write(JSON.stringify(files));
+    let encode=new TextEncoder();
+    let string=encode.encode(JSON.stringify(files))
+    stream.write(string);
     stream.write('\0\0\0\0\0\0');
     await marge();
     stream.close(()=>process.exit(0));

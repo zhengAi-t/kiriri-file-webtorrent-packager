@@ -1,0 +1,7 @@
+node_modules
+dist
+test
+test.*
+backup
+backup.*
+/release

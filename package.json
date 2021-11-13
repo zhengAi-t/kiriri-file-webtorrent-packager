@@ -1,0 +1,15 @@
+{
+  "name": "kiriri-file-webtorrent-packager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "pkg": "^5.4.1",
+    "@types/node": "^16.11.7"
+  },
+  "scripts": {
+    "build":"webpack ./index.js -o ./dist --target node --mode production && yarn pkg ./dist/main.js"
+  }
+}

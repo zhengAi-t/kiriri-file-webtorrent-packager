@@ -1,0 +1,23 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version":"2.0.0",
+  "tasks":[{
+    //打包当前打开的文件到dist目录，附带source-map
+      "label":"pack",
+      "type":"shell",
+      "command":"webpack",
+      "args":[
+        "${file}",
+        "-o",
+        "./dist",
+        "--target",
+        "node",
+        "--mode",
+        "production",
+        // "--devtool",
+        // "source-map",
+      ]
+    },
+  ]
+}

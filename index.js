@@ -40,6 +40,7 @@ async function pack(input,output){
   try{
     getFiles('');
     stream=fs.createWriteStream(output);
+    files.forEach(s=>s.name=normalize(s.name));
     stream.write(JSON.stringify(files));
     stream.write('\0\0\0\0\0\0');
     await marge();
@@ -68,6 +69,28 @@ async function pack(input,output){
       stream.write(file);
     }
   }
+}
+function normalize(path){
+  let result=[];
+  let index=0,length=path.length;
+  while(index<length){
+    if(path[index]==='/'||path[index]==='\\'){
+      index++;
+      continue;
+    }
+    let name=[];
+    while(index<length){
+      let char=path[index];
+      if(char==='/'||char==='\\')break;
+      name.push(char);
+      index++;
+    }
+    name=name.join('');
+    if(name==='.')continue;
+    if(name==='..')result.pop();
+    else result.push(name);
+  }
+  return result.join('/');
 }
 (async function(){
   let choice=[cmd,dbclick,manual];
